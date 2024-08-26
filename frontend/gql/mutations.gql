@@ -1,0 +1,40 @@
+mutation Authenticate($username: String!, $password: String!) {
+    authenticate(input: { username: $username, password: $password }) {
+        jwtToken 
+    }
+}
+
+type CreateUserInput {
+    username: String
+    password: String
+    name: String
+    familyName: String
+    email: String
+    cellphone: String
+    isAdmin: Boolean
+}
+
+mutation CreateUser($input: CreateUserInput!) {
+    createUser(input: $input) {
+        user { id }
+        account { id }
+    }
+}
+
+mutation InstallModule($keyName: String!) {
+  installModule(input: { keyName: $keyName }) {
+    boolean
+  }
+}
+
+mutation LinkUserModule($username: String!, $module: String!) {
+  linkUserModule(input:{ username: $username, module: $module }) {
+    boolean
+  }
+}
+
+mutation UnlinkUserModule($username: String!, $module: String!) {
+  unlinkUserModule(input:{ username: $username, module: $module }) {
+    boolean
+  }
+}

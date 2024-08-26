@@ -1,0 +1,15 @@
+mutation CreateNewProject($name: String!) {
+  createProject(input:{ name:$name }) {
+    project {
+      id
+    }
+  }
+}
+
+mutation CreateProyectStep($name: String! $order: Int! $projectId: String!) {
+  createProjectStep(input: { projectStep: { name: $name, order: $order, projectId: $projectId } }) {
+    projectStep {
+      id
+    }
+  }
+}

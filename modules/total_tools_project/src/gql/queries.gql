@@ -1,0 +1,38 @@
+query GetProjects {
+  projects {
+    nodes {
+      id
+      name
+    }
+  }
+}
+
+query GetProjectById($id: String!) {
+  projects(filter: {id: { equalTo: $id } }, first: 1) {
+    nodes {
+      id
+      name
+    }
+  }
+}
+
+query GetProyectSteps($projectId: String!) {
+  projectSteps(filter: { projectId: { equalTo: $projectId } }) {
+    nodes {
+      id
+      name
+      order
+    }
+  }
+}
+
+query GetTasksByProjectStepId($projectStepId: String!) {
+  tasks(filter: { projectStepId: { equalTo: $projectStepId } }) {
+    nodes {
+      id
+      name
+      description
+      userId
+    }
+  }
+}

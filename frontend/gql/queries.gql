@@ -1,0 +1,42 @@
+query GetUsers {
+  users {
+    nodes {
+      id
+      name
+      familyName
+      email
+      cellphone
+    }
+  }
+}
+
+query GetModules {
+  modules {
+    nodes {
+      keyName
+      name
+      icon
+      isInstalled
+    }
+  }
+}
+
+query FilterAccountsNotInModule($module: String!) {
+  filterAccountsNotInModule(module: $module) {
+    nodes {
+      id
+      isAdmin
+      username
+    }
+  }
+}
+
+query FilterAccountsInModule($module: String!) {
+  accountModules(condition: { moduleId: $module }) {
+    nodes {
+      account {
+        username
+      }
+    }
+  }
+}
