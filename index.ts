@@ -23,7 +23,7 @@ listen(
     () =>
         console.log(
             TotalTools,
-            `\nServer listening on http://127.0.0.1:${PORT}`,
-            `\nServer GraphiQL on http://127.0.0.1:${PORT}/graphiql`,
+            `\n[Total Tools] Server listening on http://127.0.0.1:${PORT}`,
+            `\n[Total Tools] Server GraphiQL on http://127.0.0.1:${PORT}/graphiql`,
         )
 ) 
