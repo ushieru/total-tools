@@ -1,0 +1,185 @@
+mutation CreateCategory(
+    $name: String!
+    $availableFrom: Date!
+    $availableUntil: Date!
+    $availableFromHour: Time!
+    $availableUntilHour: Time!
+    $availableDays: [Int]!
+  ) {
+  createCategory(input: { category: {
+      name: $name
+      availableFrom: $availableFrom
+      availableUntil: $availableUntil
+      availableFromHour: $availableFromHour
+      availableUntilHour: $availableUntilHour
+      availableDays: $availableDays
+    } }) {
+    category {
+      id
+    }
+  }
+}
+
+mutation UpdateCategoryById(
+  $id: String!
+  $name: String!
+  $availableFrom: Date!
+  $availableUntil: Date!
+  $availableFromHour: Time!
+  $availableUntilHour: Time!
+  $availableDays: [Int]!
+) {
+  updateCategory(
+    input: {
+      id: $id
+      patch: {
+        name: $name
+        availableFrom: $availableFrom
+        availableUntil: $availableUntil
+        availableFromHour: $availableFromHour
+        availableUntilHour: $availableUntilHour
+        availableDays: $availableDays
+      }
+    }
+  ) {
+    category {
+      id
+    }
+  }
+}
+
+
+mutation DeleteCategory($id: String!) {
+  deleteCategory(input: { id: $id }) {
+    category {
+      id
+    }
+  }
+}
+
+mutation CreateProduct(
+    $name: String!
+    $description: String!
+    $price: BigFloat!
+    $availableFrom: Date!
+    $availableUntil: Date!
+    $availableFromHour: Time!
+    $availableUntilHour: Time!
+    $availableDays: [Int]!
+  ) {
+  createProduct(input: { product: { 
+      name: $name
+      description: $description
+      price: $price
+      availableFrom: $availableFrom
+      availableUntil: $availableUntil
+      availableFromHour: $availableFromHour
+      availableUntilHour: $availableUntilHour
+      availableDays: $availableDays
+    } }) {
+    product {
+      id
+    }
+  }
+}
+
+mutation UpdateProductById(
+    $id: String!
+    $name: String!
+    $description: String!
+    $price: BigFloat!
+    $availableFrom: Date!
+    $availableUntil: Date!
+    $availableFromHour: Time!
+    $availableUntilHour: Time!
+    $availableDays: [Int]!
+  ) {
+  updateProduct(
+    input: {
+      id: $id
+      patch: {
+        name: $name
+        description: $description
+				price: $price
+        availableFrom: $availableFrom
+        availableUntil: $availableUntil
+        availableFromHour: $availableFromHour
+        availableUntilHour: $availableUntilHour
+        availableDays: $availableDays
+      }
+    }
+  ) {
+    product {
+      id
+    }
+  }
+}
+
+mutation DeleteProduct($id: String!) {
+  deleteProduct(input: { id: $id }) {
+    product {
+      id
+    }
+  }
+}
+
+mutation CreateCategoryProduct($categoryId: String! $productId: String!) {
+  createCategoryProduct(
+    input: { categoryProduct: { categoryId: $categoryId, productId: $productId } }
+  ) {
+    categoryProduct {
+      categoryId
+      productId
+    }
+  }
+}
+
+mutation DeleteCategoryProduct($categoryId: String! $productId: String!) {
+  deleteCategoryProduct(input: { categoryId: $categoryId, productId: $productId }) {
+    categoryProduct {
+      categoryId
+      productId
+    }
+  }
+}
+
+mutation CreateTicket($createdBy: String!) {
+  createTicket(input: { ticket: { createdBy: $createdBy } }) {
+  	ticket {
+    	id
+  	}
+  }
+}
+
+mutation AddTicketProduct(
+  $name: String!
+  $description: String!
+  $price: BigFloat!
+  $ticketId: String!
+  $productId: String!
+) {
+  createTicketProduct(
+    input: {
+      ticketProduct: {
+        name: $name
+        description: $description
+        price: $price
+        productId: $productId
+        ticketId: $ticketId
+        status: ADDED
+      }
+    }
+  ) {
+    ticketProduct {
+      id
+    }
+  }
+}
+
+mutation DeleteTicketProduct($id: String!) {
+  deleteTicketProduct(input: { id: $id }) {
+    ticketProduct {
+      id
+    }
+  }
+}

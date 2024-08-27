@@ -1,0 +1,144 @@
+query WhoAmI($accountId: String!) {
+  users(condition: { accountId: $accountId }, first: 1){
+    nodes {
+      id
+      name
+      familyName
+      email
+      cellphone
+      account {
+        id
+        username
+        isAdmin
+      }
+    }
+  }
+}
+
+query GetCategories {
+  categories {
+    nodes {
+      id
+      name
+      availableFrom
+      availableUntil
+      availableFromHour
+      availableUntilHour
+      availableDays
+    }
+  }
+}
+
+query GetCategoryById($id: String!) {
+  category(id: $id){
+    id
+    name
+    availableFrom
+    availableUntil
+    availableFromHour
+    availableUntilHour
+    availableDays
+  }
+}
+
+query GetProducts {
+  products {
+    nodes {
+      id
+      name
+      description
+      price
+      availableFrom
+      availableUntil
+      availableFromHour
+      availableUntilHour
+      availableDays
+    }
+  }
+}
+
+query GetProductById($id: String!) {
+  product(id: $id) {
+    id
+    name
+    description
+    price
+    availableFrom
+    availableUntil
+    availableFromHour
+    availableUntilHour
+    availableDays
+  }
+}
+
+query GetProductCategoriesByProductId($id: String!) {
+  product(id: $id) {
+    id
+    name
+    categoryProducts {
+      nodes {
+        category {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+
+query GetCategoriesNotInProduct($id: String!) {
+  categoriesNotInProduct(productId: $id) {
+    nodes {
+      id
+      name
+    }
+  }
+}
+
+query GetAvailableCategories {
+  availableCategories {
+    nodes {
+      id
+      name
+    }
+  }
+}
+
+query GetAvailableProducts($categoryId: String!) {
+  availableProductsByCategoryId(categoryId: $categoryId) {
+    nodes {
+      id
+      name
+      description
+      price
+    }
+  }
+}
+
+query GetTickets($userId: String!) {
+  tickets(condition: { status: OPEN, createdBy: $userId }) {
+    nodes {
+      id
+      status
+      total
+    }
+  }
+}
+
+query GetTicket($id: String!) {
+  ticket(id: $id) {
+    id
+    status
+    total
+    ticketProducts {
+      nodes {
+        id
+        name
+        description
+        price
+        status
+        productId
+      }
+    }
+  }
+}
