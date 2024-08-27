@@ -45,7 +45,7 @@ const removeProduct = (product) => {
                 </div>
                 <div class="flex justify-between">
                     <span class="flex items-center gap-2">
-                        <button class="btn btn-sm" @posclick="removeProduct(ticketProduct[0])"
+                        <button class="btn btn-sm" @click="removeProduct(ticketProduct[0])"
                             :disabled="!(ticketProduct.some(({ status }) => status == 'ADDED'))">
                             <span v-if="ticketProduct.length == 1" class="material-symbols-outlined">
                                 delete
@@ -55,7 +55,7 @@ const removeProduct = (product) => {
                             </span>
                         </button>
                         {{ ticketProduct.length }}
-                        <button class="btn btn-sm" @posclick="addProduct(ticketProduct[0])">
+                        <button class="btn btn-sm" @click="addProduct(ticketProduct[0])">
                             <span class="material-symbols-outlined">
                                 add
                             </span>
@@ -77,13 +77,13 @@ const removeProduct = (product) => {
             Ticket
         </button>
         <button class="btn btn-error" :class="{ 'btn-disabled': ticketProducts.length != 0 }"
-            :disabled="ticketProducts.length != 0" @posclick="cancelTicket()">
+            :disabled="ticketProducts.length != 0" @click="cancelTicket()">
             Cancelar
         </button>
         <button onclick="pay_modal.showModal()" class="btn btn-primary" :disabled="ticketProducts.length == 0">
             Cobrar
         </button>
-        <button @posclick="orderProducts" class="btn btn-primary" :disabled="ticketProducts.length == 0">
+        <button @click="orderProducts" class="btn btn-primary" :disabled="ticketProducts.length == 0">
             Ordenar
         </button>
     </section>

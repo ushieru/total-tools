@@ -42,7 +42,7 @@ const refetchAll = () => {
                     <div class="divider m-0"></div>
                     <button v-if="!categoriesNotInProductIsLoading"
                         v-for="category in categoriesNotInProduct.categoriesNotInProduct.nodes"
-                        @posclick="() => createCategoryProduct({ categoryId: category.id, productId: productId }).then(refetchAll)"
+                        @click="() => createCategoryProduct({ categoryId: category.id, productId: productId }).then(refetchAll)"
                         class="btn btn-primary">
                         {{ category.name }}
                     </button>
@@ -55,7 +55,7 @@ const refetchAll = () => {
                     </h1>
                     <div class="divider m-0"></div>
                     <button v-for="category in productWithCategories.product.categoryProducts.nodes"
-                        @posclick="() => deleteCategoryProduct({ categoryId: category.category.id, productId: productId }).then(refetchAll)"
+                        @click="() => deleteCategoryProduct({ categoryId: category.category.id, productId: productId }).then(refetchAll)"
                         class="btn btn-secondary">
                         {{ category.category.name }}
                     </button>

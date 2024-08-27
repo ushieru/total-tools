@@ -27,37 +27,37 @@ const toggleDrawer = () => document.getElementById('my-drawer').click()
                 <div class="h-[150px] grid place-items-center">
                     <img src="/modules/total_tools_pos/favicon.svg" class="w-[100px]" alt="favicon" />
                 </div>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/admin" class="font-semibold grid place-content-center h-12 w-full"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Dashboard
                     </RouterLink>
                 </li>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/admin/categories" class="font-semibold grid place-content-center h-12"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Categorias
                     </RouterLink>
                 </li>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/admin/products" class="font-semibold grid place-content-center h-12"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Productos
                     </RouterLink>
                 </li>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/admin/production-centers" class="text-center font-semibold grid place-content-center h-12 text-clip"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Centros producción
                     </RouterLink>
                 </li>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/admin/tables" class="font-semibold grid place-content-center h-12"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Mesas
                     </RouterLink>
                 </li>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/admin/tickets" class="font-semibold grid place-content-center h-12"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Tickets

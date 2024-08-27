@@ -63,7 +63,7 @@ const showModal = (id) => document.getElementById(id).showModal()
                         </span>
                     </td>
                     <td class="flex gap-2">
-                        <button class="btn btn-sm btn-error" @posclick="showModal(`delete_category_${category.id}`)">
+                        <button class="btn btn-sm btn-error" @click="showModal(`delete_category_${category.id}`)">
                             <span class="material-symbols-outlined">
                                 delete
                             </span>
@@ -87,7 +87,7 @@ const showModal = (id) => document.getElementById(id).showModal()
                                 </form>
                                 <form method="dialog">
                                     <button class="btn btn-primary"
-                                        @posclick="() => deleteCategory({ id: category.id }).then(reloadCategories)">Eliminar</button>
+                                        @click="() => deleteCategory({ id: category.id }).then(reloadCategories)">Eliminar</button>
                                 </form>
                             </div>
                         </div>

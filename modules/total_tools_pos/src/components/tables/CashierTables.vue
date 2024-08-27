@@ -1,5 +1,5 @@
 <script setup>
-import { useQuery } from '@postanstack/vue-query'
+import { useQuery } from '@tanstack/vue-query'
 import { orderTables } from '@pos/utils/tableUtils';
 import { PosSingleton } from '@pos/services/pos-service'
 import useResize from '@pos/hooks/useResize'

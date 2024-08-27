@@ -33,7 +33,7 @@ const selectCategory = (category) => currentCategory.value = category
                 <div class="card-body flex-row gap-2 overflow-x-auto">
                     <button v-for="category in availableCategories?.availableCategories?.nodes" class="btn"
                         :class="{ 'btn-primary': currentCategory?.id == category.id }"
-                        @posclick="selectCategory(category)">
+                        @click="selectCategory(category)">
                         {{ category.name }}
                     </button>
                 </div>
@@ -77,7 +77,7 @@ const selectCategory = (category) => currentCategory.value = category
         <div class="modal-box">
             <h3 class="font-bold text-lg">Este ticket ya esta pagado</h3>
             <div class="flex justify-end">
-                <button @posclick="goToTickets" class="btn btn-primary">Volver</button>
+                <button @click="goToTickets" class="btn btn-primary">Volver</button>
             </div>
         </div>
     </dialog> -->

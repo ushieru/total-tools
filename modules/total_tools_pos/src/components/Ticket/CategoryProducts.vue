@@ -30,7 +30,7 @@ const addProduct = (product) => {
                     .filter(p => p.product_id == product.id)
                     .reduce(acc => ++acc, 0)
             }} </span> -->
-        <button class="btn btn-neutral flex flex-col w-full h-40" @posclick="addProduct(product)">
+        <button class="btn btn-neutral flex flex-col w-full h-40" @click="addProduct(product)">
             <span> {{ product.name }}</span>
             <kbd class="kbd">${{ product.price }}</kbd>
         </button>

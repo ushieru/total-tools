@@ -27,19 +27,19 @@ const toggleDrawer = () => document.getElementById('my-drawer').click()
                 <div class="h-[150px] grid place-items-center">
                     <img src="/modules/total_tools_pos/favicon.svg" class="w-[100px]" alt="favicon" />
                 </div>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/cashier" class="font-semibold grid place-content-center h-12 w-full"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Mesas
                     </RouterLink>
                 </li>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/cashier/new" class="font-semibold grid place-content-center h-12"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Venta Rapida
                     </RouterLink>
                 </li>
-                <li @posclick="toggleDrawer">
+                <li @click="toggleDrawer">
                     <RouterLink to="/cashier/tickets" class="font-semibold grid place-content-center h-12"
                         :exact-active-class="'bg-gray-200/10 rounded-lg'">
                         Tickets Abiertos
