@@ -2,7 +2,9 @@
 import { useRouter } from 'vue-router'
 import { useMutation } from '@vue/apollo-composable'
 import { Authenticate } from '@/gql/mutations.gql'
-import favicon from '@/assets/favicon.svg' 
+import favicon from '@/assets/favicon.svg'
+
+localStorage.removeItem(import.meta.env.VITE_JWT_LOCAL_STORAGE_KEY)
 
 const router = useRouter()
 
