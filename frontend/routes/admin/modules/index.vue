@@ -3,12 +3,11 @@ import { GetModules } from '@/gql/queries.gql'
 import { InstallModule } from '@/gql/mutations.gql'
 import { useMutation, useQuery } from '@vue/apollo-composable';
 
-const { result: getModulesResult, refetch } = useQuery(GetModules)
+const { result: getModulesResult } = useQuery(GetModules, {}, { pollInterval: 2000 })
 const { mutate } = useMutation(InstallModule)
 
 const installModule = (module) =>
     mutate({ keyName: module.keyName })
-        .then(_ => refetch())
 </script>
 
 <template>
