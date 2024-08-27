@@ -4,7 +4,7 @@ import { useMutation, useQuery } from '@vue/apollo-composable';
 import dayjs from 'dayjs';
 import { UpdateTask, DeleteTask, CreateTaskComment } from '../gql/mutations.gql'
 import { GetTasksComments, WhoAmI } from '../gql/queries.gql'
-import { GetSession } from '../utils/GetSession';
+import { GetSession } from '@common/utils/GetSession';
 
 const props = defineProps(['task', 'step', 'refetch'])
 
