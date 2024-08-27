@@ -28,7 +28,10 @@ const options = {
 const getModules = () => {
     const modules = readdirSync('modules');
     GraphileWorker.then((runner) =>
-        modules.map(module => runner.addJob('register_module', { name: module })))
+        modules
+            .filter(m => m.startsWith("total_tools"))
+            .map(m => runner.addJob('register_module', { name: m }))
+    )
     return modules.map(module => `${module}`)
 }
 
