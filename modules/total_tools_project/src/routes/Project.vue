@@ -27,6 +27,8 @@ const onNewProjectStepFormSubmit = (e) =>
     })
 
 const deleteProject = () => alert("not implemented method")
+
+const addCollaborators = () => alert("not implemented method")
 </script>
 
 <template>
@@ -40,6 +42,7 @@ const deleteProject = () => alert("not implemented method")
                     <ul tabindex="0"
                         class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box absolute -left-12">
                         <li><button @click="deleteProject">Eliminar</button></li>
+                        <li><button @click="addCollaborators">Agregar colaboradores</button></li>
                     </ul>
                 </div>
             </div>
