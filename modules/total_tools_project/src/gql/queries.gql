@@ -36,3 +36,30 @@ query GetTasksByProjectStepId($projectStepId: String!) {
     }
   }
 }
+
+query GetTasksComments($taskId: String!) {
+  taskComments(filter: { taskId: { equalTo: $taskId } } orderBy: CREATED_AT_DESC) {
+    nodes {
+      id
+      comment
+      createdAt
+      user {
+        id
+        accountId
+        name
+        familyName
+        email
+      }
+    }
+  }
+}
+
+query WhoAmI($accountId: String!){
+  whoAmI(accountId: $accountId) {
+    id
+    name
+    familyName
+    email
+    cellphone
+  }
+}

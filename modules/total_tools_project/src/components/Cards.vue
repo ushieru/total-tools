@@ -1,24 +1,38 @@
 <script setup>
 import { GetTasksByProjectStepId } from '../gql/queries.gql'
-import { useQuery } from '@vue/apollo-composable';
+import { AddTask } from '../gql/mutations.gql'
+import { useQuery, useMutation } from '@vue/apollo-composable';
 import Task from './Tasks.vue'
 
 const { step } = defineProps(['step'])
 
-const { result: tasksResult } = useQuery(
+const { result: tasksResult, refetch } = useQuery(
     GetTasksByProjectStepId,
     { projectStepId: step.id }
 )
 
+const { mutate: addTask } = useMutation(AddTask)
+
 const showModal = (id) =>
     document.getElementById(id).showModal()
 
-const onNewStepCardFormSubmit = (e) => alert('method not implemented')
+const onNewStepCardFormSubmit = (e) => {
+    const payload = {
+        name: e.target.name.value,
+        projectStepId: step.id,
+    }
+    addTask(payload).then(_ => {
+        e.target.reset()
+        const modalId = e.target.id.replace('new_proyect_step_form_', 'new_card_modal_')
+        document.getElementById(modalId).close()
+        refetch()
+    })
+}
 </script>
 
 <template>
     <template v-for="task in tasksResult?.tasks?.nodes">
-        <Task :task="task" :step="step" :refetch="fetchTasks" />
+        <Task :task="task" :step="step" :refetch="refetch" />
     </template>
     <button @click="showModal('new_card_modal_' + step.id)" class="btn">
         <span class="material-symbols-outlined">

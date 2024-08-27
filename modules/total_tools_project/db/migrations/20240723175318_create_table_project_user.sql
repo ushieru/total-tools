@@ -2,10 +2,12 @@
 CREATE TABLE "total_tools_project"."project_user"(
     "project_id" VARCHAR(12) NOT NULL
         CONSTRAINT fk_project
-        REFERENCES "total_tools_project"."project"("id"),
+        REFERENCES "total_tools_project"."project"("id")
+        ON DELETE CASCADE,
     "user_id" VARCHAR(12) NOT NULL
         CONSTRAINT fk_user
-        REFERENCES "total_tools_core"."user"("id"),
+        REFERENCES "total_tools_core"."user"("id")
+        ON DELETE CASCADE,
     PRIMARY KEY("project_id", "user_id")
 );
 

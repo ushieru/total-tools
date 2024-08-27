@@ -1,6 +1,6 @@
 -- migrate:up
 CREATE TABLE "total_tools_project"."project"(
-    "id" VARCHAR(12) PRIMARY KEY DEFAULT nanoid(12),
+    "id" VARCHAR(12) PRIMARY KEY DEFAULT public.nanoid(12),
     "name" VARCHAR(255) NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT NOW(),
     "updated_at" TIMESTAMP NOT NULL DEFAULT NOW()

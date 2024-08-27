@@ -1,12 +1,27 @@
 <script setup>
 import { ref } from 'vue';
+import { useMutation, useQuery } from '@vue/apollo-composable';
+import dayjs from 'dayjs';
+import { UpdateTask, DeleteTask, CreateTaskComment } from '../gql/mutations.gql'
+import { GetTasksComments, WhoAmI } from '../gql/queries.gql'
+import { GetSession } from '../utils/GetSession';
 
-const { task: originalTask, step, refetch } = defineProps(['task', 'step', 'refetch'])
+const props = defineProps(['task', 'step', 'refetch'])
 
-const task = ref({ ...originalTask })
-const isDescriptionEditing = ref(!originalTask.description.length)
+const isDescriptionEditing = ref(!props.task.description.length)
 const comments = ref([])
-const session = getSession()
+const session = GetSession()
+
+const { mutate: updateTask } = useMutation(UpdateTask)
+const { mutate: deleteTask } = useMutation(DeleteTask)
+const { mutate: createTaskComment } = useMutation(CreateTaskComment)
+const { onResult, refetch: refetchComments } = useQuery(GetTasksComments, { taskId: props.task.id })
+const { result: WhoAmIResult } = useQuery(WhoAmI, { accountId: session.sub })
+
+onResult(({ data }) => {
+    if (!data) return
+    comments.value = data.taskComments.nodes
+})
 
 const showModal = (id) =>
     document.getElementById(id).showModal()
@@ -17,43 +32,32 @@ const enableEditingDescription = () =>
 const disableEditingDescription = () =>
     isDescriptionEditing.value = false
 
-const onUpdateTaskDescription = (e) => postgrest
-    .from('task')
-    .update({ description: e.target.description.value })
-    .eq('id', originalTask.id)
-    .then(response => {
-        if (response.status != 204) return
-        task.value.description = e.target.description.value
+const onUpdateTaskDescription = (e) =>
+    updateTask({
+        id: props.task.id,
+        description: e.target.description.value
+    }).then(_ => {
+        props.refetch()
         disableEditingDescription()
     })
 
-const deleteTask = () => postgrest
-    .from('task')
-    .delete()
-    .eq('id', originalTask.id)
-    .then(response => {
-        if (!(response.status >= 200 && response.status < 300)) return
-        refetch()
-    })
+const onDeleteTask = () =>
+    deleteTask({ id: props.task.id })
+        .then(_ => {
+            props.refetch()
+            document.getElementById('task_modal_' + props.task.id).close()
+        })
 
-const fetchComments = () => postgrest
-    .from('task_comment')
-    .select('*')
-    .eq('task_id', originalTask.id)
-    .then(response => comments.value = response.data)
-
-const onSubmitCommentForm = (e) => postgrest
-    .from('task_comment')
-    .insert({
+const onSubmitCommentForm = (e) =>
+    createTaskComment({
+        taskId: props.task.id,
         comment: e.target.comment.value,
-        account_id: session.sub,
-        task_id: originalTask.id
-    })
-    .then(response => {
-        if (response.status != 201) return
-        fetchComments()
+        userId: WhoAmIResult.value.whoAmI.id
+    }).then(_ => {
+        refetchComments()
         e.target.reset()
     })
+
 </script>
 
 <template>
@@ -68,7 +72,7 @@ const onSubmitCommentForm = (e) => postgrest
                     <div tabindex="0" role="button" class="m-1 btn btn-sm material-symbols-outlined">settings</div>
                     <ul tabindex="0"
                         class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box absolute -left-12">
-                        <li><button @click="deleteTask">Eliminar</button></li>
+                        <li><button @click="onDeleteTask">Eliminar</button></li>
                     </ul>
                 </div>
             </div>
@@ -91,43 +95,48 @@ const onSubmitCommentForm = (e) => postgrest
             </form>
             <div class="divider my-0"></div>
             <p class="font-bold mb-3">Comentarios</p>
-            <form @submit.prevent="onSubmitCommentForm">
+            <form id="new_comment" @submit.prevent="onSubmitCommentForm">
                 <label class="form-control w-full">
                     <label class="form-control w-full">
                         <div class="label">
                             <span class="label-text">Comentario</span>
                         </div>
-                        <input type="text" name="comment" class="input input-bordered w-full" />
+                        <input autofocus type="text" name="comment" class="input input-bordered w-full" />
                     </label>
                 </label>
                 <div class="m-3"></div>
                 <div class="flex justify-end gap-2">
-                    <button class="btn btn-sm">Comentar</button>
+                    <button form="new_comment" class="btn btn-sm">Comentar</button>
                 </div>
             </form>
             <template v-for="comment in comments">
-                <div v-if="comment.account_id == session.sub" class="chat chat-end">
+                <div v-if="comment.user.accountId == session.sub" class="chat chat-end">
                     <div class="chat-image avatar">
-                        <div class="w-10 rounded-full">
-                            <img alt="Tailwind CSS chat bubble component" src="https://thispersondoesnotexist.com/" />
+                        <div class="w-10 rounded-full bg-primary text-black">
+                            <p class="text-center content-center h-full"> {{ comment.user.name.slice(0, 1) }}</p>
                         </div>
                     </div>
                     <div class="chat-header">
-                        <time class="text-xs opacity-50">{{ comment.created_at.split('T')[0] }}</time>
+                        <span class="ml-1 capitalize">{{ comment.user.name }} {{ comment.user.familyName }}</span>
                     </div>
                     <div class="chat-bubble">{{ comment.comment }}</div>
+                    <div class="chat-footer opacity-50">
+                        <time class="text-xs">{{ dayjs(comment.createdAt).format('HH:mm') }}</time>
+                    </div>
                 </div>
                 <div v-else class="chat chat-start">
                     <div class="chat-image avatar">
-                        <div class="w-10 rounded-full">
-                            <img alt="Tailwind CSS chat bubble component" src="https://thispersondoesnotexist.com/" />
+                        <div class="w-10 rounded-full bg-primary text-black">
+                            <p class="text-center content-center h-full"> {{ comment.user.name.slice(0, 1) }}</p>
                         </div>
                     </div>
                     <div class="chat-header">
-                        Obi-Wan Kenobi
-                        <time class="text-xs opacity-50">12:46</time>
+                        <span class="ml-1 capitalize">{{ comment.user.name }} {{ comment.user.familyName }}</span>
                     </div>
-                    <div class="chat-bubble">You were the Chosen One!</div>
+                    <div class="chat-bubble">{{ comment.comment }}</div>
+                    <div class="chat-footer opacity-50">
+                        <time class="text-xs">{{ dayjs(comment.createdAt).format('HH:mm') }}</time>
+                    </div>
                 </div>
             </template>
         </div>
