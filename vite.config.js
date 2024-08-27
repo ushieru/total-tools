@@ -11,7 +11,9 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': resolve(__dirname, 'frontend')
+            '@': resolve(__dirname, 'frontend'),
+            '@common': resolve(__dirname, 'modules', 'common'),
+            '@pos': resolve(__dirname, 'modules', 'total_tools_pos', 'src')
         }
     },
     build: {
